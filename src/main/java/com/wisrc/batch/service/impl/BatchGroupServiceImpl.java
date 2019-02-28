@@ -8,6 +8,7 @@ import com.wisrc.batch.service.BatchGroupService;
 import com.wisrc.batch.utils.RetMsg;
 import com.wisrc.batch.utils.SysStatus;
 import com.wisrc.batch.utils.factory.RetMsgFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,9 @@ import java.util.List;
  * Created by hzwy23 on 2017/5/25.
  */
 @Service
+@Slf4j
 public class BatchGroupServiceImpl implements BatchGroupService {
-    private final Logger logger = LoggerFactory.getLogger(BatchGroupServiceImpl.class);
+
     @Autowired
     private BatchGroupDao batchGroupDao;
 
