@@ -66,16 +66,4 @@ public class GroupDefineServiceImpl implements GroupDefineService {
         }
     }
 
-    @Override
-    public RetMsg updateArg(String argValue, String uuid, String argId) {
-        try {
-            int size = groupArgumentDao.updateArg(argValue, uuid, argId);
-            if (1 == size) {
-                return RetMsgFactory.getRetMsg(SysStatus.SUCCESS_CODE, "success", null);
-            }
-            return RetMsgFactory.getRetMsg(SysStatus.ERROR_CODE, "更新任务组类型参数失败，请联系管理员", null);
-        } catch (Exception e) {
-            return RetMsgFactory.getRetMsg(SysStatus.EXCEPTION_ERROR_CODE, e.getMessage(), null);
-        }
-    }
 }

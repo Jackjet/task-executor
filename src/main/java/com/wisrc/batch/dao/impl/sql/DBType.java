@@ -39,7 +39,7 @@ public class DBType {
     @PostConstruct
     private void init() {
         this.dbname = environment.getProperty("spring.datasource.name");
-        if(this.dbname == null) {
+        if (this.dbname == null) {
             this.dbname = "mysql";
         }
         this.dbname = this.dbname.toLowerCase();

@@ -1,6 +1,7 @@
 package com.wisrc.batch.core;
 
 
+import com.wisrc.batch.constant.BatchMessageConstant;
 import com.wisrc.batch.dto.BatchRunConfDto;
 import com.wisrc.batch.service.BatchDefineService;
 import com.wisrc.batch.utils.BatchStatus;
@@ -8,8 +9,7 @@ import com.wisrc.batch.utils.DateTime;
 import com.wisrc.batch.utils.RetMsg;
 import com.wisrc.batch.utils.SysStatus;
 import com.wisrc.batch.utils.factory.RetMsgFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Async;
@@ -23,11 +23,9 @@ import java.util.Set;
  */
 @Component
 @Scope("prototype")
+@Slf4j
 public class QuartzSchedulerManager {
-    private final String BATCH_SUCCESS_MSG = "success";
-    private final String BATCH_ERROR_MSG = "Running error";
-    private final String BATCH_STOPPED_MSG = "stopped";
-    private final Logger logger = LoggerFactory.getLogger(QuartzSchedulerManager.class);
+
     @Autowired
     public QuartzSchedulerConfig quartzSchedulerConfig;
     @Autowired
@@ -45,7 +43,7 @@ public class QuartzSchedulerManager {
     public void createJobSchedulerService(BatchRunConfDto conf) throws Exception {
         this.conf = conf;
         drm.afterPropertiesSet(conf);
-        logger.debug("初始化参数管理服务成功，批次号是：{}", conf.getBatchId());
+        log.debug("初始化参数管理服务成功，批次号是：{}", conf.getBatchId());
         this.scheduler = quartzSchedulerConfig.createSchedulerFactoryBean(conf, drm);
     }
 
@@ -55,16 +53,15 @@ public class QuartzSchedulerManager {
             RetMsg retMsg = batchPagging();
             if (!retMsg.checkCode()) {
                 if (SysStatus.COMPLETED.equals(retMsg.getCode())) {
-                    logger.info(retMsg.getMessage());
+                    log.info(retMsg.getMessage());
                 } else {
-                    logger.error(retMsg.getMessage());
+                    log.error(retMsg.getMessage());
                 }
                 return;
             }
         }
-        logger.info("批次停止运行");
+        log.info("批次停止运行");
     }
-
 
     private int schedulerCenter() {
         groupSchedulerService.initRunGroup(scheduler.getScheduler(), drm);
@@ -87,10 +84,10 @@ public class QuartzSchedulerManager {
                  * 接着根据翻页频率，翻页执行批次
                  * */
                 if (drm.isBatchCompleted()) {
-                    logger.info("批次执行完成，完成时间是：{}, 批次号是：{}，批次日期是：{}", DateTime.getCurrentDateTime(), conf.getBatchId(), conf.getAsOfDate());
+                    log.info("批次执行完成，完成时间是：{}, 批次号是：{}，批次日期是：{}", DateTime.getCurrentDateTime(), conf.getBatchId(), conf.getAsOfDate());
                     scheduler.stop();
                     scheduler.destroy();
-                    batchDefineService.destoryBatch(conf.getBatchId(), BATCH_SUCCESS_MSG, BatchStatus.BATCH_STATUS_COMPLETED);
+                    batchDefineService.destoryBatch(conf.getBatchId(), BatchMessageConstant.BATCH_SUCCESS_MSG, BatchStatus.BATCH_STATUS_COMPLETED);
                     batchDefineService.saveHistory(conf.getBatchId());
                     return BatchStatus.BATCH_STATUS_COMPLETED;
                 }
@@ -101,36 +98,37 @@ public class QuartzSchedulerManager {
                  * 并撤销整个批次
                  * */
                 if (drm.hasError()) {
-                    logger.info("任务执行失败，停止调度服务, 批次号是：{}", conf.getBatchId());
+                    log.info("任务执行失败，停止调度服务, 批次号是：{}", conf.getBatchId());
                     scheduler.stop();
                     scheduler.destroy();
-                    batchDefineService.destoryBatch(conf.getBatchId(), BATCH_ERROR_MSG, BatchStatus.BATCH_STATUS_ERROR);
+                    batchDefineService.destoryBatch(conf.getBatchId(), BatchMessageConstant.BATCH_ERROR_MSG, BatchStatus.BATCH_STATUS_ERROR);
                     batchDefineService.saveHistory(conf.getBatchId());
                     return BatchStatus.BATCH_STATUS_ERROR;
                 }
 
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 // 如果批次状态被设置为非执行状态，则退出当前批次
                 int batchSt = batchDefineService.getStatus(conf.getBatchId());
                 if (BatchStatus.BATCH_STATUS_RUNNING != batchSt) {
-                    logger.info("批次处于非运行状态，退出调度服务。批次号是：{}, 状态是：{}", conf.getBatchId(), batchDefineService.getStatus(conf.getBatchId()));
+                    log.info("批次处于非运行状态，退出调度服务。批次号是：{}, 状态是：{}", conf.getBatchId(), batchDefineService.getStatus(conf.getBatchId()));
                     scheduler.stop();
                     scheduler.destroy();
-                    batchDefineService.destoryBatch(conf.getBatchId(), BATCH_STOPPED_MSG, BatchStatus.BATCH_STATUS_STOPPED);
+                    batchDefineService.destoryBatch(conf.getBatchId(), BatchMessageConstant.BATCH_STOPPED_MSG, BatchStatus.BATCH_STATUS_STOPPED);
                     batchDefineService.saveHistory(conf.getBatchId());
                     return batchSt;
                 }
             }
             return batchDefineService.getStatus(conf.getBatchId());
+
         } catch (Exception e) {
             e.printStackTrace();
-            logger.info("批次运行异常,异常信息是：{}", e.getMessage());
+            log.info("批次运行异常,异常信息是：{}", e.getMessage());
             batchDefineService.destoryBatch(conf.getBatchId(), e.getMessage(), BatchStatus.BATCH_STATUS_ERROR);
-            logger.info("停止批次{}", conf.getBatchId());
+            log.info("停止批次{}", conf.getBatchId());
             scheduler.stop();
-            logger.info("批次{}停止成功, 保存批次运行历史记录", conf.getBatchId());
+            log.info("批次{}停止成功, 保存批次运行历史记录", conf.getBatchId());
             batchDefineService.saveHistory(conf.getBatchId());
-            logger.info("批次历史记录保存完成，{}结束调度", conf.getBatchId());
+            log.info("批次历史记录保存完成，{}结束调度", conf.getBatchId());
             return BatchStatus.BATCH_STATUS_ERROR;
         }
     }
@@ -139,7 +137,7 @@ public class QuartzSchedulerManager {
     private RetMsg batchPagging() {
         RetMsg retMsg = batchDefineService.batchPagging(conf);
         if (SysStatus.SUCCESS_CODE != retMsg.getCode()) {
-            logger.info("批次【{}】已经运行到终止日期,终止运行", conf.getBatchId());
+            log.info("批次【{}】已经运行到终止日期,终止运行", conf.getBatchId());
             return retMsg;
         }
 

@@ -20,15 +20,6 @@ public interface SysConfigService {
     List<SysConfigEntity> findAll(String domainId);
 
     /**
-     * 修改参数值
-     *
-     * @param domainId
-     * @param configId
-     * @param configValue
-     */
-    int setValue(String domainId, String configId, String configValue);
-
-    /**
      * 查询参数值
      *
      * @param domainId
@@ -36,5 +27,4 @@ public interface SysConfigService {
      */
     String getValue(String domainId, String configId);
 
-    List<ProcEntity> getProcList();
 }

@@ -38,13 +38,4 @@ public interface GroupDefineService {
      * @param vo
      */
     RetMsg add(GroupDefineEntity vo);
-
-    /**
-     * 更新任务组类型参数
-     *
-     * @param uuid
-     * @param arg_id
-     * @param argValue
-     */
-    RetMsg updateArg(String argValue, String uuid, String arg_id);
 }

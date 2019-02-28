@@ -18,15 +18,6 @@ public interface BatchGroupRunningService {
      */
     List<BatchGroupStatusEntity> findAll(String batchId, String asOfDate);
 
-    /**
-     * 查询批次中任务组的运行进度
-     *
-     * @param batchId
-     * @param gid
-     * @return Integer 任务组中任务的完成比例
-     */
-    Integer getRatio(String batchId, String gid, String asOfDate);
-
 
     /**
      * 查询批次中任务组的详细信息

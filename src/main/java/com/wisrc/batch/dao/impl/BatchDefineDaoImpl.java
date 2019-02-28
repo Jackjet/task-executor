@@ -35,53 +35,6 @@ public class BatchDefineDaoImpl implements BatchDefineDao {
     }
 
     @Override
-    public List<BatchDefineEntity> getRunning(String domainId) {
-        RowMapper<BatchDefineEntity> rowMapper = new BeanPropertyRowMapper<BatchDefineEntity>(BatchDefineEntity.class);
-        List list = jdbcTemplate.query(batchSqlText.getSql("sys_rdbms_165"), rowMapper, domainId);
-        return list;
-    }
-
-    @Override
-    public int add(BatchDefineEntity m) {
-        return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_128"),
-                m.getBatchId(),
-                m.getCodeNumber(),
-                m.getBatchDesc(),
-                m.getBatchStatus(),
-                m.getAsOfDate(),
-                m.getRetMsg(),
-                m.getCompleteDate(),
-                m.getDomainId(),
-                m.getPaggingFreq(),
-                m.getPaggingFreqMult());
-    }
-
-    @Transactional
-    @Override
-    public String delete(List<BatchDefineEntity> m) {
-        try {
-            for (BatchDefineEntity l : m) {
-                jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_129"), l.getBatchId(), l.getDomainId());
-            }
-            return "success";
-        } catch (Exception e) {
-            return e.getMessage();
-        }
-    }
-
-    @Override
-    public int update(BatchDefineEntity m) {
-        return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_130"),
-                m.getBatchDesc(),
-                m.getAsOfDate(),
-                m.getCompleteDate(),
-                m.getPaggingFreq(),
-                m.getPaggingFreqMult(),
-                m.getBatchId(),
-                m.getDomainId());
-    }
-
-    @Override
     public int getStatus(String batchId) {
         return jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_131"), Integer.class, batchId);
     }
@@ -94,11 +47,6 @@ public class BatchDefineDaoImpl implements BatchDefineDao {
     @Override
     public int setStatus(String batchId, int status) {
         return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_140"), Integer.toString(status), batchId);
-    }
-
-    @Override
-    public int updateAsofdate(String asofdate, String batchId) {
-        return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_161"), asofdate, batchId);
     }
 
     @Override

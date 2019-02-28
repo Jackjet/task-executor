@@ -23,17 +23,8 @@ public class SysConfigServiceImpl implements SysConfigService {
     }
 
     @Override
-    public int setValue(String domainId, String configId, String configValue) {
-        return sysConfigDao.setValue(domainId, configId, configValue);
-    }
-
-    @Override
     public String getValue(String domainId, String configId) {
         return sysConfigDao.getValue(domainId, configId);
     }
 
-    @Override
-    public List<ProcEntity> getProcList() {
-        return sysConfigDao.getProcList();
-    }
 }

@@ -35,41 +35,4 @@ public class ArgumentDefineDaoImpl implements ArgumentDefineDao {
         List<ArgumentDefineEntity> list = jdbcTemplate.query(batchSqlText.getSql("sys_rdbms_104"), rowMapper, domainId);
         return list;
     }
-
-    @Override
-    public int add(ArgumentDefineEntity m) {
-        String id = JoinCode.join(m.getDomainId(), m.getArgId());
-        return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_119"),
-                id,
-                m.getArgType(),
-                m.getArgValue(),
-                m.getArgId(),
-                m.getCreateUser(),
-                m.getModifyUser(),
-                m.getDomainId(),
-                m.getArgDesc(),
-                m.getBindAsOfDate());
-    }
-
-    @Transactional
-    @Override
-    public String delete(List<ArgumentDefineEntity> m) {
-        for (ArgumentDefineEntity l : m) {
-            jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_120"), l.getArgId(), l.getDomainId());
-        }
-        return "success";
-    }
-
-    @Override
-    public int update(ArgumentDefineEntity m) {
-        String id = JoinCode.join(m.getDomainId(), m.getArgId());
-        return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_121"),
-                m.getModifyUser(),
-                m.getBindAsOfDate(),
-                m.getArgDesc(),
-                m.getArgValue(),
-                id,
-                m.getDomainId());
-
-    }
 }

@@ -8,10 +8,9 @@ import com.wisrc.batch.service.ExecService;
 import com.wisrc.batch.service.JobKeyStatusService;
 import com.wisrc.batch.service.TaskDefineService;
 import com.wisrc.batch.utils.JoinCode;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -26,8 +25,8 @@ import java.util.Map;
 
 @Configuration
 @Scope("prototype")
+@Slf4j
 public class QuartzSchedulerConfig {
-    private final Logger logger = LoggerFactory.getLogger(QuartzSchedulerConfig.class);
 
     @Autowired
     private TaskDefineService taskDefineService;
@@ -89,7 +88,7 @@ public class QuartzSchedulerConfig {
     private void initGroupTaskMap(List<GroupTaskEntity> jobKeyList) {
         jobKeyMap = new HashMap<>();
         for (GroupTaskEntity m : jobKeyList) {
-            logger.debug("group task is,{}", m.toString());
+            log.debug("group task is,{}", m.toString());
             jobKeyMap.put(m.getJobKey(), m);
         }
     }

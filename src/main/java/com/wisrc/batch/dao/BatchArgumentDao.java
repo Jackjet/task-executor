@@ -1,8 +1,5 @@
 package com.wisrc.batch.dao;
 
-
-import com.wisrc.batch.entity.BatchArgumentEntiry;
-
 import java.util.List;
 
 /**
@@ -19,15 +16,4 @@ public interface BatchArgumentDao {
      */
     List findAll(String domainId, String batchId);
 
-    /**
-     * 查询某一个批次所有的批次类型参数信息
-     *
-     * @param batchId 批次编码
-     * @return 返回某一个批次所有的批次参数类型的值
-     */
-    List<BatchArgumentEntiry> findBatchArgsById(String batchId);
-
-    String getAsOfDate(String batchId);
-
-    int add(List<BatchArgumentEntiry> list);
 }

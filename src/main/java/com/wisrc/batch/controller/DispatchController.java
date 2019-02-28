@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @Scope("prototype")
-@Api(description ="批次调度-批次启动管理")
+@Api(description = "批次调度-批次启动管理")
 @Slf4j
 public class DispatchController {
 
@@ -73,7 +73,7 @@ public class DispatchController {
         }
 
         retMsg = batchDefineService.runBatchInit(batchId);
-        if (SysStatus.SUCCESS_CODE != retMsg.getCode()) {
+        if (!SysStatus.SUCCESS_CODE.equals(retMsg.getCode())) {
             batchDefineService.setStatus(batchId, BatchStatus.BATCH_STATUS_ERROR);
             log.info(retMsg.toString());
             response.setStatus(426);

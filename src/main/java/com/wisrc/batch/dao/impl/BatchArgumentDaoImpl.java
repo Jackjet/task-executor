@@ -38,44 +38,6 @@ public class BatchArgumentDaoImpl implements BatchArgumentDao {
         return bindAsofdate(list, list2);
     }
 
-    @Override
-    public List<BatchArgumentEntiry> findBatchArgsById(String batchId) {
-        RowMapper<BatchArgumentEntiry> rowMapper = new BeanPropertyRowMapper<>(BatchArgumentEntiry.class);
-        return jdbcTemplate.query(batchSqlText.getSql("sys_rdbms_139"), rowMapper, batchId);
-    }
-
-    @Override
-    public String getAsOfDate(String batchId) {
-        String asofdate = jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_157"), String.class, batchId);
-        return TimeFormat.formatTime(asofdate);
-    }
-
-
-    @Transactional
-    @Override
-    public int add(List<BatchArgumentEntiry> list) {
-        for (BatchArgumentEntiry m : list) {
-
-            if (isExists(m.getBatchId(), m.getArgId())) {
-                if (1 != jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_160"),
-                        m.getArgValue(),
-                        m.getBatchId(),
-                        m.getArgId())) {
-                    return -1;
-                }
-            } else {
-                if (1 != jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_158"),
-                        m.getBatchId(),
-                        m.getArgId(),
-                        m.getArgValue(),
-                        m.getDomainId())) {
-                    return -1;
-                }
-            }
-        }
-        return 1;
-    }
-
     private List<BatchArgumentEntiry> bindAsofdate(List<BatchArgumentEntiry> ret, List<BatchArgumentEntiry> source) {
         for (BatchArgumentEntiry m : source) {
             // 绑定批次日期
@@ -88,13 +50,5 @@ public class BatchArgumentDaoImpl implements BatchArgumentDao {
             ret.add(m);
         }
         return ret;
-    }
-
-    private boolean isExists(String batchID, String argId) {
-        int flag = jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_159"), Integer.class, batchID, argId);
-        if (flag >= 1) {
-            return true;
-        }
-        return false;
     }
 }

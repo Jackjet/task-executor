@@ -17,24 +17,4 @@ public interface ArgumentDefineService {
      */
     List<ArgumentDefineEntity> findAll(String domainID);
 
-    /**
-     * 向参数定义表中新增参数
-     *
-     * @param vo 参数信息
-     */
-    RetMsg addArgument(ArgumentDefineEntity vo);
-
-    /**
-     * 删除已经定义的参数信息
-     *
-     * @param list 准备删除的参数定义信息
-     */
-    RetMsg deleteArgument(List<ArgumentDefineEntity> list);
-
-    /**
-     * 更新参数信息
-     *
-     * @param vo
-     */
-    RetMsg updateArgument(ArgumentDefineEntity vo);
 }

@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CaptureConsole {
 
     private final Logger logger = LoggerFactory.getLogger(CaptureConsole.class);
+
     @Autowired
     private ExecService execService;
 

@@ -54,11 +54,6 @@ public class TaskDefineServiceImpl implements TaskDefineService {
     }
 
     @Override
-    public List<TaskDefineEntity> getAll(String domainId) {
-        return dispatchTaskDefineDao.findAll(domainId);
-    }
-
-    @Override
     public RetMsg add(TaskDefineEntity m) {
         try {
             int size = dispatchTaskDefineDao.add(m);
@@ -88,68 +83,6 @@ public class TaskDefineServiceImpl implements TaskDefineService {
     public RetMsg update(TaskDefineEntity m) {
         try {
             int size = dispatchTaskDefineDao.update(m);
-            if (1 == size) {
-                return RetMsgFactory.getRetMsg(SysStatus.SUCCESS_CODE, "success", null);
-            }
-            return RetMsgFactory.getRetMsg(SysStatus.ERROR_CODE, "新增任务失败，请联系管理员", null);
-        } catch (Exception e) {
-            return RetMsgFactory.getRetMsg(SysStatus.EXCEPTION_ERROR_CODE, e.getMessage(), null);
-        }
-    }
-
-    @Override
-    public List<TaskArgumentEntity> getTaskArg(String taskId) {
-        return taskArgumentDao.getTaskArg(taskId);
-    }
-
-    @Override
-    public RetMsg updateArgumentSort(String sortId, String uuid) {
-        try {
-            int size = taskArgumentDao.updateSort(sortId, uuid);
-            if (1 == size) {
-                return RetMsgFactory.getRetMsg(SysStatus.SUCCESS_CODE, "success", null);
-            }
-            return RetMsgFactory.getRetMsg(SysStatus.ERROR_CODE, "新增任务失败，请联系管理员", null);
-        } catch (Exception e) {
-            return RetMsgFactory.getRetMsg(SysStatus.EXCEPTION_ERROR_CODE, e.getMessage(), null);
-        }
-    }
-
-    @Override
-    public RetMsg deleteArg(String uuid) {
-        try {
-            int size = taskArgumentDao.deleteArg(uuid);
-            if (1 == size) {
-                return RetMsgFactory.getRetMsg(SysStatus.SUCCESS_CODE, "success", null);
-            }
-            return RetMsgFactory.getRetMsg(SysStatus.ERROR_CODE, "新增任务失败，请联系管理员", null);
-        } catch (Exception e) {
-            return RetMsgFactory.getRetMsg(SysStatus.EXCEPTION_ERROR_CODE, e.getMessage(), null);
-        }
-    }
-
-    @Override
-    public TaskArgumentEntity getArgType(String argId) {
-        return taskArgumentDao.getArgType(argId);
-    }
-
-    @Override
-    public RetMsg addArg(TaskArgumentEntity taskArgumentEntity) {
-        try {
-            int size = taskArgumentDao.addArg(taskArgumentEntity);
-            if (1 == size) {
-                return RetMsgFactory.getRetMsg(SysStatus.SUCCESS_CODE, "success", null);
-            }
-            return RetMsgFactory.getRetMsg(SysStatus.ERROR_CODE, "新增任务失败，请联系管理员", null);
-        } catch (Exception e) {
-            return RetMsgFactory.getRetMsg(SysStatus.EXCEPTION_ERROR_CODE, e.getMessage(), null);
-        }
-    }
-
-    @Override
-    public RetMsg updateArgValue(String argValue, String uuid) {
-        try {
-            int size = taskArgumentDao.updateArgValue(argValue, uuid);
             if (1 == size) {
                 return RetMsgFactory.getRetMsg(SysStatus.SUCCESS_CODE, "success", null);
             }
