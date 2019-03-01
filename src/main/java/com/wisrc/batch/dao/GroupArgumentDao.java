@@ -9,8 +9,4 @@ import java.util.List;
  */
 public interface GroupArgumentDao {
     List<GroupArgumentEntity> findAll(String domainId);
-
-    List<GroupArgumentEntity> getGroupArg(String id);
-
-    int updateArg(String argValue, String uuid, String argId);
 }

@@ -1,7 +1,5 @@
 package com.wisrc.batch.dao;
 
-import com.wisrc.batch.entity.GroupDefineEntity;
-
 import java.util.List;
 
 /**
@@ -9,10 +7,4 @@ import java.util.List;
  */
 public interface GroupDefineDao {
     List findAll(String domainId);
-
-    int update(GroupDefineEntity m);
-
-    String delete(List<GroupDefineEntity> m);
-
-    int add(GroupDefineEntity m);
 }

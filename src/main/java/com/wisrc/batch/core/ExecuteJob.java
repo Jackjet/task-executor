@@ -4,8 +4,8 @@ import com.wisrc.batch.dto.BatchRunConfDto;
 import com.wisrc.batch.entity.TaskArgumentEntity;
 import com.wisrc.batch.service.ArgumentService;
 import com.wisrc.batch.service.JobKeyStatusService;
-import com.wisrc.batch.utils.DateTime;
 import com.wisrc.batch.utils.JoinCode;
+import com.wisrc.batch.utils.TimeFormat;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -20,6 +20,7 @@ import java.util.List;
  * Created by hzwy23 on 2017/7/4.
  */
 public class ExecuteJob extends QuartzJobBean {
+
     private final Logger logger = LoggerFactory.getLogger(ExecuteJob.class);
 
     private String scriptPath;
@@ -34,7 +35,7 @@ public class ExecuteJob extends QuartzJobBean {
 
         String jobParameters = getJobParameters();
         String file = getScriptFilePath(conf.getBasePath(), scriptPath);
-        logger.info("开始执行时间是：{}, 脚本路径是：{}，参数是：{}", DateTime.getCurrentDateTime(), file, jobParameters);
+        logger.info("开始执行时间是：{}, 脚本路径是：{}，参数是：{}", TimeFormat.getCurrentDateTime(), file, jobParameters);
 
         try {
             String command = new StringBuilder(file).append(" ").append(jobParameters).toString();
@@ -53,7 +54,7 @@ public class ExecuteJob extends QuartzJobBean {
     }
 
     private String getJobParameters() {
-        String jobId = JoinCode.getTaskCode(jobName);
+        String jobId = JoinCode.getLast(jobName);
         List<TaskArgumentEntity> list = argumentService.queryArgument(jobId);
         if (list == null) {
             return "";

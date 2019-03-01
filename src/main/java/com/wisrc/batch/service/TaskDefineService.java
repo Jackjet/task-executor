@@ -1,7 +1,6 @@
 package com.wisrc.batch.service;
 
 import com.wisrc.batch.entity.TaskDefineEntity;
-import com.wisrc.batch.utils.RetMsg;
 
 import java.util.List;
 
@@ -19,24 +18,4 @@ public interface TaskDefineService {
      */
     List<TaskDefineEntity> findAll(String domainId, String batchId);
 
-    /**
-     * 添加任务
-     *
-     * @param m
-     */
-    RetMsg add(TaskDefineEntity m);
-
-    /**
-     * 删除任务
-     *
-     * @param m
-     */
-    RetMsg delete(List<TaskDefineEntity> m);
-
-    /**
-     * 更新任务
-     *
-     * @param m
-     */
-    RetMsg update(TaskDefineEntity m);
 }

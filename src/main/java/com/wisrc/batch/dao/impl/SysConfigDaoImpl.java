@@ -2,7 +2,6 @@ package com.wisrc.batch.dao.impl;
 
 import com.wisrc.batch.dao.SysConfigDao;
 import com.wisrc.batch.dao.impl.sql.BatchSqlText;
-import com.wisrc.batch.entity.ProcEntity;
 import com.wisrc.batch.entity.SysConfigEntity;
 import com.wisrc.batch.utils.JoinCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,12 +67,6 @@ public class SysConfigDaoImpl implements SysConfigDao {
         } catch (EmptyResultDataAccessException e) {
             return defaultValue;
         }
-    }
-
-    @Override
-    public List<ProcEntity> getProcList() {
-        RowMapper<ProcEntity> rowMapper = new BeanPropertyRowMapper<>(ProcEntity.class);
-        return jdbcTemplate.query(batchSqlText.getSql("sys_rdbms_216"), rowMapper);
     }
 
     private boolean isExists(String domainId, String configId) {

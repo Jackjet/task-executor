@@ -3,9 +3,7 @@ package com.wisrc.batch.dao.impl;
 import com.wisrc.batch.dao.TaskDependencyDao;
 import com.wisrc.batch.dao.impl.sql.BatchSqlText;
 import com.wisrc.batch.dto.JobKeyDepDto;
-import com.wisrc.batch.entity.TaskDependencyEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,18 +16,13 @@ import java.util.List;
  * Created by hzwy23 on 2017/5/27.
  */
 @Repository
+@Slf4j
 public class TaskDependencyDaoImpl implements TaskDependencyDao {
-    private final Logger logger = LoggerFactory.getLogger(TaskDependencyDaoImpl.class);
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private BatchSqlText batchSqlText;
-
-    @Override
-    public List<TaskDependencyEntity> findAll(String domainId) {
-        RowMapper<TaskDependencyEntity> rowMapper = new BeanPropertyRowMapper<TaskDependencyEntity>(TaskDependencyEntity.class);
-        return jdbcTemplate.query(batchSqlText.getSql("sys_rdbms_113"), rowMapper, domainId);
-    }
 
     @Override
     public List<JobKeyDepDto> findById(String domainId, String batchId) {

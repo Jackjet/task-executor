@@ -4,8 +4,8 @@ import com.wisrc.batch.dto.BatchRunConfDto;
 import com.wisrc.batch.entity.TaskArgumentEntity;
 import com.wisrc.batch.service.ArgumentService;
 import com.wisrc.batch.service.JobKeyStatusService;
-import com.wisrc.batch.utils.DateTime;
 import com.wisrc.batch.utils.JoinCode;
+import com.wisrc.batch.utils.TimeFormat;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class JavaJarJob extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         String jobParameters = getJobParameters();
         String cmd = getScriptFilePath(conf.getBasePath(), scriptPath);
-        logger.info("开始执行时间是：{}, 脚本路径是：{}，参数是：{}", DateTime.getCurrentDateTime(), cmd, jobParameters);
+        logger.info("开始执行时间是：{}, 脚本路径是：{}，参数是：{}", TimeFormat.getCurrentDateTime(), cmd, jobParameters);
 
         try {
             String command = new StringBuilder("java -jar ").append(cmd).append(" ").append(jobParameters).toString();
@@ -51,7 +51,7 @@ public class JavaJarJob extends QuartzJobBean {
     }
 
     private String getJobParameters() {
-        String jobId = JoinCode.getTaskCode(jobName);
+        String jobId = JoinCode.getLast(jobName);
         List<TaskArgumentEntity> list = argumentService.queryArgument(jobId);
         if (list == null) {
             return "";

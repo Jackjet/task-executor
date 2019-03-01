@@ -3,8 +3,8 @@ package com.wisrc.batch.core;
 import com.wisrc.batch.entity.TaskArgumentEntity;
 import com.wisrc.batch.service.ArgumentService;
 import com.wisrc.batch.service.JobKeyStatusService;
-import com.wisrc.batch.utils.DateTime;
 import com.wisrc.batch.utils.JoinCode;
+import com.wisrc.batch.utils.TimeFormat;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class ProcedureJob extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         String jobParameters = getJobParameters();
         try {
-            logger.info("开始执行时间是：{}, 存储过程是：{}, 参数是：{}", DateTime.getCurrentDateTime(), scriptPath, jobParameters);
+            logger.info("开始执行时间是：{}, 存储过程是：{}, 参数是：{}", TimeFormat.getCurrentDateTime(), scriptPath, jobParameters);
             jdbcTemplate.execute("call " + scriptPath + jobParameters);
             jobKeyStatusService.setJobCompleted(jobName);
             logger.info("存储过程执行完成，存储过程名称是：{}", scriptPath);
@@ -42,7 +42,7 @@ public class ProcedureJob extends QuartzJobBean {
     }
 
     private String getJobParameters() {
-        String jobId = JoinCode.getTaskCode(jobName);
+        String jobId = JoinCode.getLast(jobName);
         List<TaskArgumentEntity> list = argumentService.queryArgument(jobId);
         if (list == null) {
             return "()";

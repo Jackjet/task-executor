@@ -5,10 +5,9 @@ import com.wisrc.batch.constant.BatchMessageConstant;
 import com.wisrc.batch.dto.BatchRunConfDto;
 import com.wisrc.batch.service.BatchDefineService;
 import com.wisrc.batch.utils.BatchStatus;
-import com.wisrc.batch.utils.DateTime;
 import com.wisrc.batch.utils.RetMsg;
 import com.wisrc.batch.utils.SysStatus;
-import com.wisrc.batch.utils.factory.RetMsgFactory;
+import com.wisrc.batch.utils.TimeFormat;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -84,7 +83,7 @@ public class QuartzSchedulerManager {
                  * 接着根据翻页频率，翻页执行批次
                  * */
                 if (drm.isBatchCompleted()) {
-                    log.info("批次执行完成，完成时间是：{}, 批次号是：{}，批次日期是：{}", DateTime.getCurrentDateTime(), conf.getBatchId(), conf.getAsOfDate());
+                    log.info("批次执行完成，完成时间是：{}, 批次号是：{}，批次日期是：{}", TimeFormat.getCurrentDateTime(), conf.getBatchId(), conf.getAsOfDate());
                     scheduler.stop();
                     scheduler.destroy();
                     batchDefineService.destoryBatch(conf.getBatchId(), BatchMessageConstant.BATCH_SUCCESS_MSG, BatchStatus.BATCH_STATUS_COMPLETED);
@@ -147,8 +146,8 @@ public class QuartzSchedulerManager {
             scheduler = quartzSchedulerConfig.createSchedulerFactoryBean(conf, drm);
         } catch (Exception e) {
             e.printStackTrace();
-            return RetMsgFactory.getRetMsg(SysStatus.EXCEPTION_ERROR_CODE, "初始化调度器失败", null);
+            return new RetMsg(SysStatus.EXCEPTION_ERROR_CODE, "初始化调度器失败", null);
         }
-        return RetMsgFactory.getRetMsg(SysStatus.SUCCESS_CODE, "success", null);
+        return new RetMsg(SysStatus.SUCCESS_CODE, "success", null);
     }
 }

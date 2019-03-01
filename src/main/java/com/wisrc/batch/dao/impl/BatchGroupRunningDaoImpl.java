@@ -18,11 +18,13 @@ import java.util.List;
  */
 @Repository
 public class BatchGroupRunningDaoImpl implements BatchGroupRunningDao {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private BatchDefineDao batchDefineDao;
+
     @Autowired
     private BatchSqlText batchSqlText;
 
@@ -41,46 +43,6 @@ public class BatchGroupRunningDaoImpl implements BatchGroupRunningDao {
             bh.setCompleteJobsCnt(completeCnt);
         }
         return list;
-    }
-
-    @Override
-    public BatchGroupStatusEntity getDetails(String batchId, String suiteKey, String asOfDate) {
-
-        RowMapper<BatchGroupStatusEntity> rowMapper = new BeanPropertyRowMapper<>(BatchGroupStatusEntity.class);
-        BatchGroupStatusEntity batchGroupStatusEntity = jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_205"), rowMapper, batchId, suiteKey, asOfDate);
-
-        Integer totalCnt = getTotalJobs(batchId, suiteKey, asOfDate);
-
-        Integer completeCnt = getCompleteJobs(batchId, suiteKey, asOfDate);
-
-        Integer ratio = 100;
-
-        if (totalCnt != 0) {
-            ratio = 100 * completeCnt / totalCnt;
-        } else {
-            String statusCd = batchGroupStatusEntity.getStatus();
-            if (statusCd.equals("0") || statusCd.equals("1")) {
-                ratio = 0;
-            }
-        }
-
-        batchGroupStatusEntity.setTotalJobsCnt(totalCnt);
-
-        batchGroupStatusEntity.setCompleteJobsCnt(completeCnt);
-
-        batchGroupStatusEntity.setRatio(ratio);
-
-        return batchGroupStatusEntity;
-    }
-
-    @Override
-    public Integer getRatio(String batchId, String gid, String asOfDate) {
-        Integer totalJobs = getTotalJobs(batchId, gid, asOfDate);
-        Integer completeJobs = getCompleteJobs(batchId, gid, asOfDate);
-        if (totalJobs == 0) {
-            return 100;
-        }
-        return 100 * completeJobs / totalJobs;
     }
 
     /*

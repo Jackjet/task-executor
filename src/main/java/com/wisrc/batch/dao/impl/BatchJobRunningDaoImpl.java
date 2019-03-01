@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Repository
 public class BatchJobRunningDaoImpl implements BatchJobRunningDao {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -27,9 +28,4 @@ public class BatchJobRunningDaoImpl implements BatchJobRunningDao {
         return jdbcTemplate.query(batchSqlText.getSql("sys_rdbms_204"), rowMapper, batchId, suiteKey, asOfDate);
     }
 
-    @Override
-    public BatchJobStatusEntity getDetails(String batchId, String gid, String tid) {
-        RowMapper<BatchJobStatusEntity> rowMapper = new BeanPropertyRowMapper<>(BatchJobStatusEntity.class);
-        return jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_206"), rowMapper, batchId, gid, tid);
-    }
 }

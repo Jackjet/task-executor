@@ -1,12 +1,8 @@
 package com.wisrc.batch.service;
 
-import com.wisrc.batch.dto.BatchArgumentDto;
-import com.wisrc.batch.dto.BatchMonitoringDto;
 import com.wisrc.batch.dto.BatchRunConfDto;
-import com.wisrc.batch.entity.BatchDefineEntity;
 import com.wisrc.batch.utils.RetMsg;
-
-import java.util.List;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Created by hzwy23 on 2017/6/1.
@@ -14,13 +10,6 @@ import java.util.List;
  * @author hzwy23
  */
 public interface BatchDefineService {
-    /**
-     * 查询指定域中所有的批次信息
-     *
-     * @param domainId
-     * @return List 返回这个域中，所有定义的批次列表信息
-     */
-    List<BatchDefineEntity> findAll(String domainId);
 
     /**
      * 查询批次状态
@@ -71,8 +60,6 @@ public interface BatchDefineService {
      * @param batchId 批次编号
      */
     void saveHistory(String batchId);
-
-
 
     /**
      * 初始化批次运行时的参数信息

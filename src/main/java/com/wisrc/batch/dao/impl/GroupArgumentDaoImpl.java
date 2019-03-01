@@ -26,16 +26,4 @@ public class GroupArgumentDaoImpl implements GroupArgumentDao {
         RowMapper<GroupArgumentEntity> rowMapper = new BeanPropertyRowMapper<>(GroupArgumentEntity.class);
         return jdbcTemplate.query(batchSqlText.getSql("sys_rdbms_114"), rowMapper, domainId);
     }
-
-    @Override
-    public List<GroupArgumentEntity> getGroupArg(String id) {
-        RowMapper<GroupArgumentEntity> rowMapper = new BeanPropertyRowMapper<>(GroupArgumentEntity.class);
-
-        return jdbcTemplate.query(batchSqlText.getSql("sys_rdbms_135"), rowMapper, id);
-    }
-
-    @Override
-    public int updateArg(String argValue, String uuid, String argId) {
-        return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_146"), argValue, uuid, argId);
-    }
 }

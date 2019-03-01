@@ -9,6 +9,4 @@ import java.util.List;
  */
 public interface BatchHistoryDao {
     List<BatchHistoryEntity> findAll(String domainId);
-
-    int delete(List<BatchHistoryEntity> list);
 }

@@ -18,14 +18,4 @@ public interface BatchGroupRunningService {
      */
     List<BatchGroupStatusEntity> findAll(String batchId, String asOfDate);
 
-
-    /**
-     * 查询批次中任务组的详细信息
-     *
-     * @param batchId
-     * @param suiteKey
-     * @param asOfDate
-     * @return 任务组的详细信息
-     */
-    BatchGroupStatusEntity getDetails(String batchId, String suiteKey, String asOfDate);
 }

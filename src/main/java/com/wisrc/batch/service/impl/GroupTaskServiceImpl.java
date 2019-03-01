@@ -3,20 +3,18 @@ package com.wisrc.batch.service.impl;
 import com.wisrc.batch.dao.GroupArgumentDao;
 import com.wisrc.batch.dao.GroupTaskDao;
 import com.wisrc.batch.dao.TaskArgumentDao;
-import com.wisrc.batch.dto.GroupDefineDto;
-import com.wisrc.batch.dto.GroupTaskDto;
-import com.wisrc.batch.entity.*;
+import com.wisrc.batch.entity.BatchGroupEntity;
+import com.wisrc.batch.entity.GroupTaskEntity;
 import com.wisrc.batch.service.BatchGroupService;
 import com.wisrc.batch.service.GroupTaskService;
-import com.wisrc.batch.utils.RetMsg;
-import com.wisrc.batch.utils.SysStatus;
-import com.wisrc.batch.utils.factory.RetMsgFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by hzwy23 on 2017/5/25.

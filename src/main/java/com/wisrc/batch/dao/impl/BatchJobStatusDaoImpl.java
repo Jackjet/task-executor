@@ -16,6 +16,7 @@ import java.util.Map;
  */
 @Repository
 public class BatchJobStatusDaoImpl implements BatchJobStatusDao {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -31,26 +32,6 @@ public class BatchJobStatusDaoImpl implements BatchJobStatusDao {
             jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_167"), conf.getBatchId(), m.getKey(), m.getValue(), suiteKey, jobKey, conf.getAsOfDate());
         }
         return 1;
-    }
-
-    @Override
-    public int setJobStatus(BatchRunConfDto conf, String jobId, int status) {
-        return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_168"), status, conf.getBatchId(), jobId, conf.getAsOfDate());
-    }
-
-    @Override
-    public int getJobStatus(BatchRunConfDto conf, String jobId) {
-        return jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_169"), Integer.class, conf.getBatchId(), jobId, conf.getAsOfDate());
-    }
-
-    @Override
-    public int getCompletedCnt(BatchRunConfDto conf) {
-        return jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_171"), Integer.class, conf.getBatchId(), conf.getAsOfDate());
-    }
-
-    @Override
-    public int getTotalCnt(BatchRunConfDto conf) {
-        return jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_170"), Integer.class, conf.getBatchId(), conf.getAsOfDate());
     }
 
     @Override

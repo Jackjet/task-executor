@@ -9,6 +9,4 @@ import java.util.List;
  */
 public interface BatchJobRunningDao {
     List<BatchJobStatusEntity> findAll(String batchId, String suiteKey, String asOfDate);
-
-    BatchJobStatusEntity getDetails(String batchId, String suiteKey, String jobKey);
 }

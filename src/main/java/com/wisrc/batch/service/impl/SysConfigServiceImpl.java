@@ -1,7 +1,6 @@
 package com.wisrc.batch.service.impl;
 
 import com.wisrc.batch.dao.SysConfigDao;
-import com.wisrc.batch.entity.ProcEntity;
 import com.wisrc.batch.entity.SysConfigEntity;
 import com.wisrc.batch.service.SysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,6 @@
 package com.wisrc.batch.dao;
 
 
-import com.wisrc.batch.entity.ArgumentDefineEntity;
-
 import java.util.List;
 
 /**

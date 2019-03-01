@@ -1,14 +1,8 @@
 package com.wisrc.batch.service;
 
-import com.wisrc.batch.dto.GroupDefineDto;
-import com.wisrc.batch.dto.GroupTaskDto;
 import com.wisrc.batch.entity.GroupTaskEntity;
-import com.wisrc.batch.entity.TaskArgumentEntity;
-import com.wisrc.batch.entity.TaskDependencyEntity;
-import com.wisrc.batch.utils.RetMsg;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by hzwy23 on 2017/5/25.

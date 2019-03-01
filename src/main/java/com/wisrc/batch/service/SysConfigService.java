@@ -1,6 +1,5 @@
 package com.wisrc.batch.service;
 
-import com.wisrc.batch.entity.ProcEntity;
 import com.wisrc.batch.entity.SysConfigEntity;
 
 import java.util.List;

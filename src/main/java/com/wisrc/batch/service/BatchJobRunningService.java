@@ -18,14 +18,4 @@ public interface BatchJobRunningService {
      * @return 返回批次中，某一个任务组的所有任务
      */
     List<BatchJobStatusEntity> findAll(String batchId, String suiteKey, String asOfDate);
-
-    /**
-     * 查询批次中，某一个指定任务的详细信息
-     *
-     * @param batchId
-     * @param suiteKey
-     * @param jobKey
-     * @return 批次中某一个指定任务的详细信息
-     */
-    BatchJobStatusEntity getDetails(String batchId, String suiteKey, String jobKey);
 }

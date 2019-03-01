@@ -1,7 +1,6 @@
 package com.wisrc.batch.dao;
 
 
-import com.wisrc.batch.entity.ProcEntity;
 import com.wisrc.batch.entity.SysConfigEntity;
 
 import java.util.List;
@@ -16,5 +15,4 @@ public interface SysConfigDao {
 
     String getValue(String domainId, String configId);
 
-    List<ProcEntity> getProcList();
 }

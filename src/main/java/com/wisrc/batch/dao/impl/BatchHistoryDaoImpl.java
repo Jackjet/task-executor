@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Repository
 public class BatchHistoryDaoImpl implements BatchHistoryDao {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -28,11 +29,4 @@ public class BatchHistoryDaoImpl implements BatchHistoryDao {
         return list;
     }
 
-    @Override
-    public int delete(List<BatchHistoryEntity> list) {
-        for (BatchHistoryEntity m : list) {
-            jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_194"), m.getSid());
-        }
-        return 1;
-    }
 }

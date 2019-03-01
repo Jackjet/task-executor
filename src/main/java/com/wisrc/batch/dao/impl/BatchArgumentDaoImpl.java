@@ -3,13 +3,11 @@ package com.wisrc.batch.dao.impl;
 import com.wisrc.batch.dao.BatchArgumentDao;
 import com.wisrc.batch.dao.impl.sql.BatchSqlText;
 import com.wisrc.batch.entity.BatchArgumentEntiry;
-import com.wisrc.batch.utils.TimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

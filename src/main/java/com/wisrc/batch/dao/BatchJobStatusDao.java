@@ -10,14 +10,6 @@ import java.util.Map;
 public interface BatchJobStatusDao {
     int init(BatchRunConfDto confDto, Map<String, Integer> map);
 
-    int setJobStatus(BatchRunConfDto conf, String jobId, int status);
-
-    int getJobStatus(BatchRunConfDto conf, String jobId);
-
-    int getCompletedCnt(BatchRunConfDto conf);
-
-    int getTotalCnt(BatchRunConfDto conf);
-
     int setJobRunning(BatchRunConfDto conf, String jobId, int status);
 
     int setJobEnd(BatchRunConfDto conf, String jobId, int status);

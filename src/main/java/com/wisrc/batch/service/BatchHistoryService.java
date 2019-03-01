@@ -1,8 +1,6 @@
 package com.wisrc.batch.service;
 
-import com.wisrc.batch.dto.BatchHistoryDto;
 import com.wisrc.batch.entity.BatchHistoryEntity;
-import com.wisrc.batch.utils.RetMsg;
 
 import java.util.List;
 
@@ -18,11 +16,4 @@ public interface BatchHistoryService {
      * @param domainId
      */
     List<BatchHistoryEntity> findAll(String domainId);
-
-    /**
-     * 删除域中的批次历史信息
-     *
-     * @param list
-     */
-    RetMsg delete(List<BatchHistoryDto> list);
 }

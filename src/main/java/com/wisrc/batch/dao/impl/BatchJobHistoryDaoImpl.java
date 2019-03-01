@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Repository
 public class BatchJobHistoryDaoImpl implements BatchJobHistoryDao {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired

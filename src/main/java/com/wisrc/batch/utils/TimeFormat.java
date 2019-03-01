@@ -44,9 +44,14 @@ public class TimeFormat {
         }
     }
 
-    public static String currentTime() {
+    public static String currentDate() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
         return sdfDate.format(new Date());
+    }
+
+    public static String getCurrentDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(System.currentTimeMillis());
     }
 
 }

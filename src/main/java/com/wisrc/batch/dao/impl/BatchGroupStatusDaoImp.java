@@ -15,6 +15,7 @@ import java.util.Map;
  */
 @Repository
 public class BatchGroupStatusDaoImp implements BatchGroupStatusDao {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -32,26 +33,6 @@ public class BatchGroupStatusDaoImp implements BatchGroupStatusDao {
             jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_173"), conf.getBatchId(), gid.getKey(), gid.getValue(), conf.getAsOfDate());
         }
         return 1;
-    }
-
-    @Override
-    public int setSuiteKeyStatus(BatchRunConfDto conf, String suiteKey, int status) {
-        return jdbcTemplate.update(batchSqlText.getSql("sys_rdbms_174"), status, conf.getBatchId(), suiteKey, conf.getAsOfDate());
-    }
-
-    @Override
-    public int getSuiteKeyStatus(BatchRunConfDto conf, String suiteKey) {
-        return jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_175"), Integer.class, conf.getBatchId(), suiteKey, conf.getAsOfDate());
-    }
-
-    @Override
-    public int getCompletedCnt(BatchRunConfDto conf) {
-        return jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_177"), Integer.class, conf.getBatchId(), conf.getAsOfDate());
-    }
-
-    @Override
-    public int getTotalCnt(BatchRunConfDto conf) {
-        return jdbcTemplate.queryForObject(batchSqlText.getSql("sys_rdbms_177"), Integer.class, conf.getBatchId(), conf.getAsOfDate());
     }
 
     @Override

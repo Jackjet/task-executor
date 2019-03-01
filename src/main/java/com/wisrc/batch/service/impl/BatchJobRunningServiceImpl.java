@@ -20,9 +20,4 @@ public class BatchJobRunningServiceImpl implements BatchJobRunningService {
     public List<BatchJobStatusEntity> findAll(String batchId, String suiteKey, String asOfDate) {
         return batchJobRunningDao.findAll(batchId, suiteKey, asOfDate);
     }
-
-    @Override
-    public BatchJobStatusEntity getDetails(String batchId, String suiteKey, String jobKey) {
-        return batchJobRunningDao.getDetails(batchId, suiteKey, jobKey);
-    }
 }

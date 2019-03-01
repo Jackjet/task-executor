@@ -1,7 +1,6 @@
 package com.wisrc.batch.service;
 
 import com.wisrc.batch.entity.GroupDefineEntity;
-import com.wisrc.batch.utils.RetMsg;
 
 import java.util.List;
 
@@ -18,24 +17,5 @@ public interface GroupDefineService {
      */
     List<GroupDefineEntity> findAll(String domainId);
 
-    /**
-     * 更新任务组信息
-     *
-     * @param vo
-     */
-    RetMsg update(GroupDefineEntity vo);
 
-    /**
-     * 删除任务组
-     *
-     * @param vo
-     */
-    RetMsg delete(List<GroupDefineEntity> vo);
-
-    /**
-     * 新增任务组
-     *
-     * @param vo
-     */
-    RetMsg add(GroupDefineEntity vo);
 }
