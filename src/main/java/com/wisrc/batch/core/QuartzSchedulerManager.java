@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.Set;
 
@@ -135,12 +136,13 @@ public class QuartzSchedulerManager {
 
     private RetMsg batchPagging() {
         RetMsg retMsg = batchDefineService.batchPagging(conf);
-        if (SysStatus.SUCCESS_CODE != retMsg.getCode()) {
+        if (!SysStatus.SUCCESS_CODE.equals(retMsg.getCode())) {
             log.info("批次【{}】已经运行到终止日期,终止运行", conf.getBatchId());
             return retMsg;
         }
 
         conf = batchDefineService.initConf(conf.getBatchId(), conf.getDomainId());
+
         drm.afterPropertiesSet(conf);
         try {
             scheduler = quartzSchedulerConfig.createSchedulerFactoryBean(conf, drm);
