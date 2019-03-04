@@ -2,7 +2,6 @@ package com.wisrc.batch.service;
 
 import com.wisrc.batch.dto.BatchRunConfDto;
 import com.wisrc.batch.utils.RetMsg;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  * Created by hzwy23 on 2017/6/1.

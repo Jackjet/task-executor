@@ -8,7 +8,7 @@ import com.google.common.io.BaseEncoding;
 public class JoinCode {
 
     private final static Character SEPARATOR = 0x1E;
-    private final static String SPLIT_STRING = SEPARATOR + "wisrc" + SEPARATOR ;
+    private final static String SPLIT_STRING = SEPARATOR + "wisrc" + SEPARATOR;
 
     public static String join(String str1, String str2) {
         return BaseEncoding.base64().encode(str1.concat(SPLIT_STRING).concat(str2).getBytes());

@@ -5,7 +5,6 @@ import com.wisrc.batch.dao.BatchArgumentDao;
 import com.wisrc.batch.dao.BatchDefineDao;
 import com.wisrc.batch.dao.BatchJobStatusDao;
 import com.wisrc.batch.dto.BatchRunConfDto;
-import com.wisrc.batch.entity.BatchArgumentEntiry;
 import com.wisrc.batch.entity.BatchDefineEntity;
 import com.wisrc.batch.service.BatchDefineService;
 import com.wisrc.batch.service.SysConfigService;
@@ -46,7 +45,7 @@ public class BatchDefineServiceImpl implements BatchDefineService {
 
     @Override
     public int getStatus(String batchId) {
-        Integer status =  batchDefineDao.getStatus(batchId);
+        Integer status = batchDefineDao.getStatus(batchId);
         return status == null ? BatchStatusConstant.STATUS_UNDEFINED : status;
     }
 
@@ -165,7 +164,7 @@ public class BatchDefineServiceImpl implements BatchDefineService {
     // 保存批次历史记录信息
     @Override
     public void saveHistory(String batchId) {
-        String uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString().replace("-","");
         String asOfDate = batchDefineDao.getBatchAsOfDate(batchId);
         if (asOfDate == null) {
             return;

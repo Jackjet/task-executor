@@ -9,10 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication()
 @EnableDiscoveryClient
 @EnableJpaRepositories(
-        basePackages = {"com.wisrc.microservice.dao","com.wisrc.batch.dao"}
-)
-@EnableFeignClients(
-        basePackages = {"com.wisrc.microservice.feign"}
+        basePackages = {"com.wisrc.batch.dao"}
 )
 public class MicroserviceApplication {
 
