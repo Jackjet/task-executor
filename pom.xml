@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.wisrc</groupId>
-    <artifactId>microservice</artifactId>
+    <artifactId>task-executor</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>microservice</name>
+    <name>task-executor</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

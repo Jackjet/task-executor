@@ -1,7 +1,7 @@
 ### 集成测试环境配置
 spring:
   application:
-    name: base-microservice
+    name: task-executor
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver

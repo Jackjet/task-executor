@@ -29,6 +29,7 @@ public class ProcedureJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         String jobParameters = getJobParameters();
+
         try {
             logger.info("开始执行时间是：{}, 存储过程是：{}, 参数是：{}", TimeFormat.getCurrentDateTime(), scriptPath, jobParameters);
             jdbcTemplate.execute("call " + scriptPath + jobParameters);

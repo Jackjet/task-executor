@@ -1,7 +1,7 @@
 ### 本地开发环境配置
 spring:
   application:
-    name: base-microservice-dev
+    name: task-executor
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
