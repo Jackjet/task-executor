@@ -5,7 +5,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://121.42.143.130:3306/zuul-server
+    url: jdbc:mysql://121.42.143.130:3306/etl
     username: root
     password: zhanwei
   cloud:
