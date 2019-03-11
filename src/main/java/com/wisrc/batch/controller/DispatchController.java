@@ -41,7 +41,7 @@ public class DispatchController {
     @Autowired
     private ExecService execService;
 
-    @RequestMapping(value = "/v1//batch/schedule/dispatch/start", method = RequestMethod.GET)
+    @RequestMapping(value = "/v1/dispatch/start", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "启动批次", notes = "启动批次时，需要两个参数，一个是域编码，另一个是批次编码")
     @ApiImplicitParams({
