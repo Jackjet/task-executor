@@ -14,5 +14,5 @@ spring:
       port: 30085
       enabled: true
       discovery:
-        health-check-path: /actuator/health
+        health-check-path: /batch/schedule/actuator/health
         prefer-ip-address: true
