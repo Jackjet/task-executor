@@ -4,10 +4,7 @@ import com.wisrc.batch.core.QuartzSchedulerManager;
 import com.wisrc.batch.dto.BatchRunConfDto;
 import com.wisrc.batch.service.BatchDefineService;
 import com.wisrc.batch.service.ExecService;
-import com.wisrc.batch.utils.BatchStatus;
-import com.wisrc.batch.utils.Hret;
-import com.wisrc.batch.utils.RetMsg;
-import com.wisrc.batch.utils.SysStatus;
+import com.wisrc.batch.utils.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -48,20 +45,20 @@ public class DispatchController {
             @ApiImplicitParam(required = true, name = "domainId", value = "域编码"),
             @ApiImplicitParam(required = true, name = "batchId", value = "批次编码"),
     })
-    public String start(@RequestParam(value = "domainId") String domainId,
+    public ResultBody start(@RequestParam(value = "domainId") String domainId,
                         @RequestParam(value = "batchId") String batchId,
                         HttpServletResponse response) {
 
         if (domainId == null || batchId == null) {
             response.setStatus(421);
             log.info("batch id or domain jobKey is null ,batch jobKey is: {}, domain jobKey is: {}", batchId, domainId);
-            return Hret.error(421, "domain_id is empty or batch_id is empty", null);
+            return new ResultBody(421, "domain_id is empty or batch_id is empty", null);
         }
 
         if (BatchStatus.BATCH_STATUS_RUNNING == batchDefineService.getStatus(batchId)) {
             response.setStatus(421);
             log.info("批次正在运行中，无法重新启动, 批次号是：{}", batchId);
-            return Hret.error(421, "批次正在运行中", null);
+            return new ResultBody(421, "批次正在运行中", null);
         }
 
         BatchRunConfDto bconf = batchDefineService.initConf(batchId, domainId);
@@ -69,7 +66,7 @@ public class DispatchController {
         if (!retMsg.checkCode()) {
             log.info(retMsg.getMessage());
             response.setStatus(retMsg.getCode());
-            return Hret.error(retMsg);
+            return new ResultBody(retMsg.getCode(),retMsg.getMessage(), retMsg.getDetails());
         }
 
         retMsg = batchDefineService.runBatchInit(batchId);
@@ -77,7 +74,7 @@ public class DispatchController {
             batchDefineService.setStatus(batchId, BatchStatus.BATCH_STATUS_ERROR);
             log.info(retMsg.toString());
             response.setStatus(426);
-            return Hret.error(retMsg);
+            return new ResultBody(retMsg.getCode(),retMsg.getMessage(), retMsg.getDetails());
         }
         log.debug("初始化修改批次状态信息完成，批次号是：{}", batchId);
 
@@ -88,12 +85,11 @@ public class DispatchController {
         } catch (Exception e) {
             e.printStackTrace();
             batchDefineService.setStatus(batchId, BatchStatus.BATCH_STATUS_ERROR);
-            return Hret.error(SysStatus.ERROR_CODE, "启动调度器失败", e.getMessage());
+            return new ResultBody(SysStatus.ERROR_CODE,"启动批次失败", e.getMessage());
         }
         log.debug("调度器创建成功，批次号是：{}", batchId);
-
         quartzSchedulerManager.schedulerStart();
         log.info("批次初始化完成，调度服务已启动，批次号是：{}", batchId);
-        return Hret.success(SysStatus.SUCCESS_CODE, "start batch successfully. batch id is :" + batchId, null);
+        return new ResultBody(SysStatus.SUCCESS_CODE,"start batch successfully, batch id is:" + batchId, null);
     }
 }
