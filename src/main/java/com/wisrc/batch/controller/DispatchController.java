@@ -46,26 +46,22 @@ public class DispatchController {
             @ApiImplicitParam(required = true, name = "batchId", value = "批次编码"),
     })
     public ResultBody start(@RequestParam(value = "domainId") String domainId,
-                        @RequestParam(value = "batchId") String batchId,
-                        HttpServletResponse response) {
+                        @RequestParam(value = "batchId") String batchId) {
 
         if (domainId == null || batchId == null) {
-            response.setStatus(421);
             log.info("batch id or domain jobKey is null ,batch jobKey is: {}, domain jobKey is: {}", batchId, domainId);
             return new ResultBody(421, "domain_id is empty or batch_id is empty", null);
         }
 
         if (BatchStatus.BATCH_STATUS_RUNNING == batchDefineService.getStatus(batchId)) {
-            response.setStatus(421);
             log.info("批次正在运行中，无法重新启动, 批次号是：{}", batchId);
-            return new ResultBody(421, "批次正在运行中", null);
+            return new ResultBody(423, "批次正在运行中", null);
         }
 
         BatchRunConfDto bconf = batchDefineService.initConf(batchId, domainId);
         RetMsg retMsg = execService.init(bconf);
         if (!retMsg.checkCode()) {
             log.info(retMsg.getMessage());
-            response.setStatus(retMsg.getCode());
             return new ResultBody(retMsg.getCode(),retMsg.getMessage(), retMsg.getDetails());
         }
 
@@ -73,7 +69,6 @@ public class DispatchController {
         if (!SysStatus.SUCCESS_CODE.equals(retMsg.getCode())) {
             batchDefineService.setStatus(batchId, BatchStatus.BATCH_STATUS_ERROR);
             log.info(retMsg.toString());
-            response.setStatus(426);
             return new ResultBody(retMsg.getCode(),retMsg.getMessage(), retMsg.getDetails());
         }
         log.debug("初始化修改批次状态信息完成，批次号是：{}", batchId);
